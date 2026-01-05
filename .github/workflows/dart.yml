@@ -1,0 +1,21 @@
+name: iOS-Test-Build
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.19.0' # Aap apne version ke hisaab se badal sakte hain
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check iOS Build
+        # Ye bina Apple account ke sirf check karega ki code iOS ke liye sahi hai ya nahi
+        run: flutter build ios --release --no-codesign
